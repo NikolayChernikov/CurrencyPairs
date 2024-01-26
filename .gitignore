@@ -1,0 +1,17 @@
+.idea
+*.py[cod]
+*.egg-info
+.coverage
+
+venv/
+__pycache__/
+
+/.mypy_cache
+/.pytest_cache
+/.run
+/dist
+/notebooks
+/.env
+/docker-compose.override.yml
+/config/key.json
+/tmp
