@@ -9,6 +9,6 @@
 ## Linters
 
 1. Flake8 `flake8 src`
-2. Isort `isort -c src`
+2. Isort `isort src`
 3. PyLint `pylint src`
 4. MyPy `mypy src`

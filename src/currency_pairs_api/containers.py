@@ -3,12 +3,16 @@
 Contains packages with components, config and higher level services.
 """
 # pylint: disable=[no-member, unsubscriptable-object]
+import logging
+
 from dependency_injector import containers, providers
 
 from src.currency_pairs_api.env_config import get_config_path, maybe_load_env
 from src.currency_pairs_api.services.reverse_url import ReverseUrlService
 
 __all__ = ("create_container",)
+
+logger = logging.getLogger(__name__)
 
 
 class Container(containers.DeclarativeContainer):
