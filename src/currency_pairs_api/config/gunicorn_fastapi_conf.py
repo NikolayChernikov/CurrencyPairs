@@ -6,4 +6,3 @@ threads = 1
 workers = 1
 timeout = 6000
 worker_class = "uvicorn.workers.UvicornWorker"
-

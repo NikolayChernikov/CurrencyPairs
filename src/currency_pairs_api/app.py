@@ -1,5 +1,5 @@
 """Application module."""
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import Provide, inject
 from fastapi import FastAPI
 
 from src.currency_pairs_api.containers import create_container
@@ -9,6 +9,11 @@ __all__ = ("create_app",)
 
 
 class Application:
+    """
+    Application.
+
+    Initializes container and runs event loop.
+    """
 
     def __init__(self) -> None:
         self.container = create_container()
@@ -24,7 +29,7 @@ class Application:
 
         app.include_router(test_router, prefix=prefix)
 
-        app.container = self.container
+        app.container = self.container  # type: ignore[attr-defined]
         self.container.reverse_url().init_app(app)
 
         return app
