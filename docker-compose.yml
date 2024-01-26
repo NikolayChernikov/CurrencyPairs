@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  currency-pairs-api:
+    image: currency-pairs:latest
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    restart: always
+    ports:
+      - "9000:80"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        gunicorn \
+        --config file:/app/currency_pairs_api/config/gunicorn_fastapi_conf.py \
+        "currency_pairs_api.app:create_app()"

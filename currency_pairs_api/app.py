@@ -1,16 +1,11 @@
 """Application module."""
-import logging
-
 from dependency_injector.wiring import inject, Provide
 from fastapi import FastAPI
 
-from currency_pairs.container import create_container
-from currency_pairs.endpoints.v1.test import router_test as test_router
-
+from currency_pairs_api.containers import create_container
+from currency_pairs_api.endpoints.v1.test import router_test as test_router
 
 __all__ = ("create_app",)
-
-logger = logging.getLogger(__name__)
 
 
 class Application:
@@ -32,7 +27,6 @@ class Application:
         app.container = self.container
         self.container.reverse_url().init_app(app)
 
-        logger.info("Initialized Currency-Pairs API")
         return app
 
 

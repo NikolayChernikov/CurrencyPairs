@@ -1,2 +1,6 @@
+app:
+  environment: "${APP_ENVIRONMENT}"
+  name: "${APP_NAME}"
+
 fastapi:
   prefix_v1: "/api/v1"

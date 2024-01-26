@@ -1,11 +1,8 @@
 """Util functions module."""
-import logging
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-
-logger = logging.getLogger(__name__)
 
 __all__ = (
     "get_config_path",
@@ -14,9 +11,8 @@ __all__ = (
 
 
 def get_config_path() -> Path:
-    prefix = os.getenv("PATH_PREFIX", "services/utils")
     config = os.getenv("SERVICE_CONFIG_PATH", "config/config.yml")
-    return Path(prefix) / Path(config)
+    return Path(config)
 
 
 def maybe_load_env() -> None:

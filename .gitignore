@@ -11,7 +11,6 @@ __pycache__/
 /.run
 /dist
 /notebooks
-/.env
 /docker-compose.override.yml
 /config/key.json
 /tmp
