@@ -17,5 +17,5 @@ services:
       - -c
       - |
         gunicorn \
-        --config file:/app/currency_pairs_api/config/gunicorn_fastapi_conf.py \
-        "currency_pairs_api.app:create_app()"
+        --config file:/app/src/currency_pairs_api/config/gunicorn_fastapi_conf.py \
+        "src.currency_pairs_api.app:create_app()"

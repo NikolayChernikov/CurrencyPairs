@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "currency_pairs"
+name = "CurrencyPairs"
 version = "0.1.0"
 description = ""
 authors = ["Nikolay Chernikov <n.chernikov@sxope.com>"]
 readme = "README.md"
+packages = [{include = "currency_pairs_api", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -12,6 +13,10 @@ fastapi = "^0.109.0"
 pytest-dotenv = "^0.5.2"
 gunicorn = "^21.2.0"
 uvicorn = "^0.27.0"
+flake8 = "^7.0.0"
+isort = "^5.13.2"
+pylint = "^3.0.3"
+mypy = "^1.8.0"
 
 
 [build-system]

@@ -1,5 +1,4 @@
 """ Reverse URL service module. """
-
 import logging
 from typing import Any
 

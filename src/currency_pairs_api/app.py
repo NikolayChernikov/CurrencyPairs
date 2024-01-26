@@ -2,8 +2,8 @@
 from dependency_injector.wiring import inject, Provide
 from fastapi import FastAPI
 
-from currency_pairs_api.containers import create_container
-from currency_pairs_api.endpoints.v1.test import router_test as test_router
+from src.currency_pairs_api.containers import create_container
+from src.currency_pairs_api.endpoints.v1.test import router_test as test_router
 
 __all__ = ("create_app",)
 
