@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "currencypairs"
+version = "0.1.0"
+description = ""
+authors = ["Nikolay Chernikov <n.chernikov@sxope.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+dependency-injector = "^4.41.0"
+fastapi = "^0.109.0"
+pytest-dotenv = "^0.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

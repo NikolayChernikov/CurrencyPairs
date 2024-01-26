@@ -1,0 +1,2 @@
+fastapi:
+  prefix_v1: "/api/v1"
