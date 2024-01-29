@@ -1,6 +1,26 @@
 version: "3.7"
 
 services:
+  currency-pairs-app:
+    image: currency-pairs:latest
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+    - "postgres"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        poetry install
+        poetry run currency-pairs-worker
+
   currency-pairs-api:
     image: currency-pairs:latest
     build:
@@ -19,3 +39,31 @@ services:
         gunicorn \
         --config file:/app/src/currency_pairs_api/config/gunicorn_fastapi_conf.py \
         "src.currency_pairs_api.app:create_app()"
+
+  postgres:
+    image: postgres:14.8-alpine3.18
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5400:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+
+volumes:
+  postgres-data:

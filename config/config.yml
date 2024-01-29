@@ -4,3 +4,6 @@ app:
 
 fastapi:
   prefix_v1: "/api/v1"
+
+postgres:
+  dsn: "postgresql+psycopg2://user:password@postgres/db"

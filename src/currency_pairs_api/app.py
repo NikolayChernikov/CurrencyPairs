@@ -5,8 +5,9 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import FastAPI
 
 from src.currency_pairs_api.containers import create_container
+from src.currency_pairs_api.endpoints.v1.currency_pairs import \
+    currency_pairs_router
 from src.currency_pairs_api.endpoints.v1.test import router_test as test_router
-from src.currency_pairs_api.endpoints.v1.currency_pairs import currency_pairs_router
 from src.currency_pairs_api.logging_config import LOGGING_CONFIG
 from src.lib.setup_logger import setup_logger
 

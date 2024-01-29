@@ -1,8 +1,8 @@
 # pylint: disable=protected-access
 """Database module."""
-from contextlib import AbstractContextManager, contextmanager
 import datetime
 import logging
+from contextlib import AbstractContextManager, contextmanager
 from typing import Any, Callable, Optional
 
 from sqlalchemy import create_engine, orm

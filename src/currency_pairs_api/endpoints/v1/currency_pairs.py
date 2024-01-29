@@ -1,6 +1,7 @@
 """ Test endpoint module. """
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
+
 from src.currency_pairs_api.services.currency_pairs import CurrencyPairsService
 
 currency_pairs_router = APIRouter()

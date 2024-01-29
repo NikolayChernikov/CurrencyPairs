@@ -7,6 +7,7 @@ WORKDIR /app
 RUN pip install --upgrade pip \
     && pip install \
       poetry \
+      "urllib3<2.0.0" \
     && poetry config virtualenvs.create false
 RUN --mount=type=ssh poetry install --no-root
 
@@ -21,4 +22,5 @@ RUN --mount=type=ssh poetry install
 ENV PYTHONUNBUFFERED 1
 
 EXPOSE 8080
+ENTRYPOINT [ "/app/entrypoint.sh" ]
 CMD ["sleep", "infinity"]
