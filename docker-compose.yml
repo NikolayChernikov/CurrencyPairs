@@ -36,9 +36,8 @@ services:
     working_dir: /app
     restart: always
     ports:
-      - "9000:80"
+      - "8002:8000"
     depends_on:
-      - "prometheus"
       - "currency-pairs-app"
     command:
       - /bin/sh
@@ -76,17 +75,20 @@ services:
   prometheus:
     image: prom/prometheus:latest
     ports:
-      - "9090:9090"
-    container_name: prometheus
-    depends_on:
-      - "pushgateway"
+     - "9090:9090"
+    volumes:
+     - ./deployment/prometheus.yml:/etc/prometheus/prometheus.yml
 
-  pushgateway:
-    image: prom/pushgateway:latest
-    container_name: pushgateway
-    command: "--web.enable-admin-api"
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+     - grafana-storage:/var/lib/grafana
     ports:
-      - "9091:9091"
+     - "3000:3000"
+    depends_on:
+     - "prometheus"
+    container_name: grafana
 
 volumes:
   postgres-data:
+  grafana-storage:
