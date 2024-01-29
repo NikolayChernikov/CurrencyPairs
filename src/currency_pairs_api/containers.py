@@ -7,8 +7,10 @@ import logging
 
 from dependency_injector import containers, providers
 
-from src.currency_pairs_api.env_config import get_config_path, maybe_load_env
+from src.lib.env_config import get_config_path, maybe_load_env
 from src.currency_pairs_api.services.reverse_url import ReverseUrlService
+from src.currency_pairs_api.services.coingecko import CoinGeckoService
+from src.currency_pairs_api.services.currency_pairs import CurrencyPairsService
 
 __all__ = ("create_container",)
 
@@ -22,6 +24,18 @@ class Container(containers.DeclarativeContainer):
 
     reverse_url: providers.Singleton[ReverseUrlService] = providers.Singleton(
         ReverseUrlService,
+    )
+
+    coingecko: providers.Singleton[CoinGeckoService] = providers.Singleton(
+        CoinGeckoService,
+    )
+
+    currency_pairs: providers.Singleton[CurrencyPairsService] = providers.Singleton(
+        CurrencyPairsService,
+    )
+
+    currency_pairs.add_attributes(
+        coingecko=coingecko,
     )
 
 

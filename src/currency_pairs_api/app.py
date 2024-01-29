@@ -6,8 +6,9 @@ from fastapi import FastAPI
 
 from src.currency_pairs_api.containers import create_container
 from src.currency_pairs_api.endpoints.v1.test import router_test as test_router
+from src.currency_pairs_api.endpoints.v1.currency_pairs import currency_pairs_router
 from src.currency_pairs_api.logging_config import LOGGING_CONFIG
-from src.currency_pairs_api.setup_logger import setup_logger
+from src.lib.setup_logger import setup_logger
 
 setup_logger(logging_config=LOGGING_CONFIG)
 
@@ -36,6 +37,7 @@ class Application:
         prefix = fastapi_config["prefix_v1"]
 
         app.include_router(test_router, prefix=prefix)
+        app.include_router(currency_pairs_router, prefix=prefix)
 
         app.container = self.container  # type: ignore[attr-defined]
         self.container.reverse_url().init_app(app)
