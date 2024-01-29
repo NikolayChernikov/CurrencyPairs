@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: deployment/Dockerfile
+    env_file:
+      - .env
     volumes:
       - .:/app
     working_dir: /app
@@ -13,12 +15,11 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-    - "postgres"
+      - "postgres"
     command:
       - /bin/sh
       - -c
       - |
-        poetry install
         poetry run currency-pairs-worker
 
   currency-pairs-api:
@@ -26,12 +27,16 @@ services:
     build:
       context: .
       dockerfile: deployment/Dockerfile
+    env_file:
+      - .env
     volumes:
       - .:/app
     working_dir: /app
     restart: always
     ports:
       - "9000:80"
+    depends_on:
+      - "prometheus"
     command:
       - /bin/sh
       - -c
@@ -64,6 +69,21 @@ services:
         limits:
           cpus: '1'
           memory: 4G
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    container_name: prometheus
+    depends_on:
+      - "pushgateway"
+
+  pushgateway:
+    image: prom/pushgateway:latest
+    container_name: pushgateway
+    command: "--web.enable-admin-api"
+    ports:
+      - "9091:9091"
 
 volumes:
   postgres-data:

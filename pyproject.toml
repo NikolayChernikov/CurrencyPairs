@@ -8,7 +8,7 @@ packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.109.0"
+fastapi = "0.104.1"
 pytest-dotenv = "^0.5.2"
 gunicorn = "^21.2.0"
 uvicorn = "^0.27.0"
@@ -23,6 +23,7 @@ psycopg2-binary = "^2.9.9"
 alembic = "^1.13.1"
 locust = "^2.21.0"
 setuptools = "^69.0.3"
+prometheus-client = "^0.17.0"
 
 
 [build-system]

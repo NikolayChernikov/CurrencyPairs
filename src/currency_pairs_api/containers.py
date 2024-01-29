@@ -11,6 +11,7 @@ from src.currency_pairs_api.services.currency_pairs import CurrencyPairsService
 from src.currency_pairs_api.services.reverse_url import ReverseUrlService
 from src.lib.env_config import get_config_path, maybe_load_env
 from src.lib.repositories.currency_pairs import CurrencyPairsRepository
+from src.lib.monitoring.containers import MonitoringContainer
 from src.lib.postgres.containers import PostgresContainer
 
 __all__ = ("create_container",)
@@ -38,6 +39,11 @@ class Container(containers.DeclarativeContainer):
 
     currency_pairs_repository: providers.Singleton[CurrencyPairsRepository] = providers.Singleton(
         CurrencyPairsRepository,
+    )
+
+    monitoring_container: providers.Container[MonitoringContainer] = providers.Container(
+        MonitoringContainer,
+        config=config.monitoring,
     )
 
     currency_pairs.add_attributes(

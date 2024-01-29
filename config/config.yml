@@ -7,3 +7,26 @@ fastapi:
 
 postgres:
   dsn : "postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+
+api:
+  origins: "*"
+
+monitoring:
+  asgi_monitoring:
+    gateway: "${PROMETHEUS_GATEWAY}"
+    exporter_type: 'asgi'
+    use_default_metrics: !!bool false
+    prefix: "EM"
+    job: "fast-api"
+    environment: "${APP_ENVIRONMENT}"
+    interval: !!int 20
+    auto_clear_metrics: !!bool true
+    default_metric_duration:
+      counter: !!int 60
+      enum: !!int 60
+      gauge: !!int 40
+      histogram: !!int 60
+      info: !!int 60
+      summary: !!int 60
+    disable_multiprocessing_mode: !!bool false
+    disable_service: !!bool false
