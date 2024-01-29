@@ -3,7 +3,7 @@ import logging
 from src.lib.repositories.currency_pairs import CurrencyPairsRepository
 from src.lib.postgres.database import PostgresDatabase
 from fastapi import HTTPException
-from starlette.status import HTTP_404_NOT_FOUND
+from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 __all__ = ("CurrencyPairsService",)
 
@@ -37,14 +37,14 @@ class CurrencyPairsService:
     def validate_pair(self, token: str, currency: str) -> None:
         if token.lower() not in self.token_compendium.keys():
             raise HTTPException(
-                status_code=HTTP_404_NOT_FOUND,
+                status_code=HTTP_422_UNPROCESSABLE_ENTITY,
                 detail={
                     "message": f"Token not found. Available tokens: {list(self.token_compendium.keys())}",
                 }
             )
         elif currency.lower() not in self.currency_compendium:
             raise HTTPException(
-                status_code=HTTP_404_NOT_FOUND,
+                status_code=HTTP_422_UNPROCESSABLE_ENTITY,
                 detail={
                     "message": f"Currency not found. Available currencies: {self.currency_compendium}",
                 }

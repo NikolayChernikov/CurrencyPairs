@@ -21,6 +21,8 @@ services:
       - -c
       - |
         poetry run currency-pairs-worker
+        poetry run alembic revision --autogenerate -m 'init'
+        poetry run alembic upgrade head
 
   currency-pairs-api:
     image: currency-pairs:latest
@@ -37,6 +39,7 @@ services:
       - "9000:80"
     depends_on:
       - "prometheus"
+      - "currency-pairs-app"
     command:
       - /bin/sh
       - -c

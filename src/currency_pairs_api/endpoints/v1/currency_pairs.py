@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, Response
 
 from src.currency_pairs_api.services.currency_pairs import CurrencyPairsService
-from starlette.status import HTTP_404_NOT_FOUND
+from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 currency_pairs_router = APIRouter()
 
@@ -24,7 +24,7 @@ async def get_currency_pairs(
 
     if not res:
         raise HTTPException(
-            status_code=HTTP_404_NOT_FOUND,
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY,
             detail={
                 "message": "Pair not found",
             }
