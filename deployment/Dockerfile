@@ -4,7 +4,10 @@ COPY poetry.lock pyproject.toml /app/
 
 WORKDIR /app
 
-RUN pip install --upgrade pip \
+RUN apt-get update \
+    && apt-get -qq install \
+    gcc \
+    && pip install --upgrade pip \
     && pip install \
       poetry \
       "urllib3<2.0.0" \

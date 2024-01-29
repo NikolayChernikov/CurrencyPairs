@@ -21,6 +21,8 @@ dependency-injector = {version = "^4.38.0", extras = ["yaml"]}
 SQLAlchemy = {version = "^1.4.27", extras = ["mypy"]}
 psycopg2-binary = "^2.9.9"
 alembic = "^1.13.1"
+locust = "^2.21.0"
+setuptools = "^69.0.3"
 
 
 [build-system]

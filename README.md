@@ -12,3 +12,6 @@
 2. Isort `isort src`
 3. PyLint `pylint src`
 4. MyPy `mypy src`
+
+## Locust test
+![img.png](tests/locust_result.png)
