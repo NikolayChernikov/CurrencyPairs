@@ -1,7 +1,7 @@
 """CoinGecko client module."""
 import logging
 from pycoingecko import CoinGeckoAPI
-from typing import Dict
+from typing import Dict, List
 
 __all__ = ("CoinGeckoService",)
 
@@ -13,9 +13,14 @@ class CoinGeckoService:
 
     def __init__(self) -> None:
         self.client = CoinGeckoAPI()
-        self.tokens = ['bitcoin', 'ethereum']
-        self.currencies = ['rub', 'usd']
 
-    def get_currency_by_pair(self) -> Dict:
-        pair = self.client.get_price(ids=self.tokens, vs_currencies=self.currencies)
-        return pair
+    def get_currency_by_pair(self, pairs: Dict) -> Dict:
+        res = {}
+        for token in pairs.keys():
+            pair = self.client.get_price(ids=token, vs_currencies=pairs[token])
+            res.update(pair)
+        return res
+
+    def ping(self):
+        if self.client.ping():
+            return True

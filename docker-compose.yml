@@ -20,6 +20,7 @@ services:
       - /bin/sh
       - -c
       - |
+        poetry run alembic revision --autogenerate -m "init"
         poetry run alembic upgrade head
         currency-pairs-worker
 

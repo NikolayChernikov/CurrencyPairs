@@ -13,4 +13,5 @@ class CurrencyPairs(Base):
     token = Column(String(20), primary_key=True)
     currency = Column(String(20), primary_key=True)
     value = Column(Float(50), nullable=False)
+    exchanger = Column(String(20), primary_key=True)
     timestamp = Column(DateTime, nullable=False)

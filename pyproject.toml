@@ -25,6 +25,7 @@ locust = "^2.21.0"
 setuptools = "^69.0.3"
 prometheus-client = "^0.17.0"
 prometheus-fastapi-instrumentator = "^6.1.0"
+python-binance = "^1.0.19"
 
 
 [build-system]
