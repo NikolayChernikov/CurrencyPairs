@@ -16,7 +16,12 @@ services:
       - "8080:8080"
     depends_on:
       - "postgres"
-    command: currency-pairs-worker
+    command:
+      - /bin/sh
+      - -c
+      - |
+        poetry run alembic upgrade head
+        currency-pairs-worker
 
   currency-pairs-api:
     image: currency-pairs/app:latest

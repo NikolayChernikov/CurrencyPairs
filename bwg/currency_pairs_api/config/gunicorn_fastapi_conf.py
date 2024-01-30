@@ -3,6 +3,6 @@
 
 bind = ["0.0.0.0:8000"]
 threads = 1
-workers = 3
+workers = 1
 timeout = 6000
 worker_class = "uvicorn.workers.UvicornWorker"
