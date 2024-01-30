@@ -6,7 +6,7 @@ from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
 from bwg.lib.postgres.database import PostgresDatabase
 from fastapi import HTTPException
 from typing import Dict
-from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY, HTTP_500_INTERNAL_SERVER_ERROR
+from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY, HTTP_502_BAD_GATEWAY
 
 __all__ = ("CurrencyPairsService",)
 
@@ -44,7 +44,7 @@ class CurrencyPairsService:
             raise HTTPException(
                 status_code=HTTP_422_UNPROCESSABLE_ENTITY,
                 detail={
-                    "message": f"Token not found. Available tokens: {list(self.token_compendium.keys())}",
+                    "message": f"Token not found. Available tokens: {self.token_compendium}",
                 }
             )
         elif currency not in self.currency_compendium:
@@ -74,7 +74,7 @@ class CurrencyPairsService:
         delta = dateutil.parser.isoparse(current_time) - dateutil.parser.isoparse(date)
         if delta.seconds > 5:
             raise HTTPException(
-                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=HTTP_502_BAD_GATEWAY,
                 detail={
                     "message": "Server stores irrelevant data",
                 }
