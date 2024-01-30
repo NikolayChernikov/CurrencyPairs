@@ -1,9 +1,9 @@
 import logging
 import time
 import datetime
-from src.currency_pairs.services.coingecko import CoinGeckoService
-from src.lib.postgres import PostgresDatabase
-from src.lib.repositories.currency_pairs import CurrencyPairsRepository
+from bwg.currency_pairs.services.coingecko import CoinGeckoService
+from bwg.lib.postgres import PostgresDatabase
+from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
 
 __all__ = ("ProcessorService",)
 

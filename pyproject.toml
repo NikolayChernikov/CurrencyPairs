@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Nikolay Chernikov <n.chernikov@sxope.com>"]
 readme = "README.md"
-packages = [{include = "src"}]
+packages = [{include = "bwg"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -32,4 +32,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-currency-pairs-worker = "src.currency_pairs.main:run"
+currency-pairs-worker = "bwg.currency_pairs.main:run"

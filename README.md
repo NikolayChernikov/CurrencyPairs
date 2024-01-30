@@ -8,10 +8,10 @@
 
 ## Linters
 
-1. Flake8 `flake8 src`
-2. Isort `isort src`
-3. PyLint `pylint src`
-4. MyPy `mypy src`
+1. Flake8 `flake8 bwg`
+2. Isort `isort bwg`
+3. PyLint `pylint bwg`
+4. MyPy `mypy bwg`
 
 ## Locust test
 ![img.png](tests/locust_result.png)

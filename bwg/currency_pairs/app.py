@@ -3,8 +3,8 @@ import logging
 
 from dependency_injector.wiring import Provide, inject
 
-from src.currency_pairs.containers import create_container
-from src.currency_pairs.services.processor import ProcessorService
+from bwg.currency_pairs.containers import create_container
+from bwg.currency_pairs.services.processor import ProcessorService
 
 __all__ = ("Application",)
 

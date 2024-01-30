@@ -1,7 +1,7 @@
 """EntityTableType module."""
 from sqlalchemy import Column, DateTime, String, Float
 
-from src.lib.models.base import Base
+from bwg.lib.models.base import Base
 
 __all__ = ("CurrencyPairs",)
 

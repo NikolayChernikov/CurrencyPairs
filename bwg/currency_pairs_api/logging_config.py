@@ -21,7 +21,7 @@ LOGGING_CONFIG = {
         },
     },
     "loggers": {
-        "src.currency_pairs": {
+        "bwg.currency_pairs_api": {
             "level": "INFO",
             "handlers": ["console"],
             "propagate": False,

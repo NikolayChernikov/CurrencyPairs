@@ -3,7 +3,7 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, Response
 
-from src.currency_pairs_api.services.currency_pairs import CurrencyPairsService
+from bwg.currency_pairs_api.services.currency_pairs import CurrencyPairsService
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 currency_pairs_router = APIRouter()

@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   currency-pairs-app:
-    image: currency-pairs:latest
+    image: currency-pairs/app:latest
     build:
       context: .
       dockerfile: deployment/Dockerfile
@@ -16,16 +16,10 @@ services:
       - "8080:8080"
     depends_on:
       - "postgres"
-    command:
-      - /bin/sh
-      - -c
-      - |
-        poetry run currency-pairs-worker
-        poetry run alembic revision --autogenerate -m 'init'
-        poetry run alembic upgrade head
+    command: currency-pairs-worker
 
   currency-pairs-api:
-    image: currency-pairs:latest
+    image: currency-pairs/app:latest
     build:
       context: .
       dockerfile: deployment/Dockerfile
@@ -44,8 +38,8 @@ services:
       - -c
       - |
         gunicorn \
-        --config file:/app/src/currency_pairs_api/config/gunicorn_fastapi_conf.py \
-        "src.currency_pairs_api.app:create_app()"
+        --config file:/app/bwg/currency_pairs_api/config/gunicorn_fastapi_conf.py \
+        "bwg.currency_pairs_api.app:create_app()"
 
   postgres:
     image: postgres:14.8-alpine3.18

@@ -1,7 +1,7 @@
 """Currency pairs service module."""
 import logging
-from src.lib.repositories.currency_pairs import CurrencyPairsRepository
-from src.lib.postgres.database import PostgresDatabase
+from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
+from bwg.lib.postgres.database import PostgresDatabase
 from fastapi import HTTPException
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 

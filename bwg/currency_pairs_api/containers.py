@@ -7,11 +7,11 @@ import logging
 
 from dependency_injector import containers, providers
 
-from src.currency_pairs.services.processor import ProcessorService
-from src.currency_pairs.services.coingecko import CoinGeckoService
-from src.lib.env_config import get_config_path, maybe_load_env
-from src.lib.postgres.containers import PostgresContainer
-from src.lib.repositories.currency_pairs import CurrencyPairsRepository
+from bwg.currency_pairs_api.services.currency_pairs import CurrencyPairsService
+from bwg.currency_pairs_api.services.reverse_url import ReverseUrlService
+from bwg.lib.env_config import get_config_path, maybe_load_env
+from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
+from bwg.lib.postgres.containers import PostgresContainer
 
 __all__ = ("create_container",)
 
@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 class Container(containers.DeclarativeContainer):
     """Container with components, config and services."""
 
-    # configuration from config file
     config = providers.Configuration()
 
     postgres_package: providers.Container[PostgresContainer] = providers.Container(
@@ -29,21 +28,20 @@ class Container(containers.DeclarativeContainer):
         config=config.postgres,
     )
 
-    coingecko: providers.Singleton[CoinGeckoService] = providers.Singleton(
-        CoinGeckoService,
+    reverse_url: providers.Singleton[ReverseUrlService] = providers.Singleton(
+        ReverseUrlService,
+    )
+
+    currency_pairs: providers.Singleton[CurrencyPairsService] = providers.Singleton(
+        CurrencyPairsService,
     )
 
     currency_pairs_repository: providers.Singleton[CurrencyPairsRepository] = providers.Singleton(
         CurrencyPairsRepository,
     )
 
-    processor: providers.Singleton[ProcessorService] = providers.Singleton(
-        ProcessorService,
-    )
-
-    processor.add_attributes(
+    currency_pairs.add_attributes(
         db_postgres=postgres_package.db,
-        coingecko=coingecko,
         currency_pairs_repository=currency_pairs_repository,
     )
 
@@ -54,5 +52,5 @@ def create_container() -> Container:
     container = Container()
     container.config.from_yaml(config_path)
 
-    container.wire(packages=["src.currency_pairs"])
+    container.wire(packages=["bwg.currency_pairs_api"])
     return container

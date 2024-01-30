@@ -1,7 +1,7 @@
 """Postgres Database module."""
 import logging
 
-from src.lib.database import Database
+from bwg.lib.database import Database
 
 __all__ = ("PostgresDatabase",)
 
