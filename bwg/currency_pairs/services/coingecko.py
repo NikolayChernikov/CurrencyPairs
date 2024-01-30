@@ -1,7 +1,8 @@
 """CoinGecko client module."""
 import logging
+import time
 from pycoingecko import CoinGeckoAPI
-from typing import Dict, List
+from typing import Dict
 
 __all__ = ("CoinGeckoService",)
 
@@ -18,6 +19,7 @@ class CoinGeckoService:
         res = {}
         for token in pairs.keys():
             pair = self.client.get_price(ids=token, vs_currencies=pairs[token])
+            time.sleep(0.2)
             res.update(pair)
         return res
 

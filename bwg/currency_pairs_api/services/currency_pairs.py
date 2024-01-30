@@ -1,9 +1,11 @@
 """Currency pairs service module."""
 import logging
+import dateutil.parser
 from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
 from bwg.lib.postgres.database import PostgresDatabase
 from fastapi import HTTPException
-from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
+from typing import Dict
+from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY, HTTP_500_INTERNAL_SERVER_ERROR
 
 __all__ = ("CurrencyPairsService",)
 
@@ -32,7 +34,10 @@ class CurrencyPairsService:
                                                             currency=currency.lower())
             if result:
                 dict_result = self.currency_pairs_repository.model_as_dict(result)
-                return self.format_msg(dict_result['token'], dict_result['currency'], dict_result['value'])
+                self.currency_compendium.append(dict_result['timestamp'])
+
+                return self.format_msg(dict_result['token'], dict_result['currency'],
+                                       dict_result['value'], dict_result['exchanger'])
 
     def validate_pair(self, token: str, currency: str) -> None:
         if token.lower() not in self.token_compendium.keys():
@@ -50,9 +55,9 @@ class CurrencyPairsService:
                 }
             )
 
-    def format_msg(self, token: str, currency: str, value: float):
+    def format_msg(self, token: str, currency: str, value: float, exchanger: str) -> Dict:
         return {
-            "exchanger": "coingecko",
+            "exchanger": exchanger,
             "cources": [
                 {
                     "direction": f"{self.invert_token_compendium[token.lower()]}-{currency}".upper(),
@@ -60,3 +65,14 @@ class CurrencyPairsService:
                 }
             ]
         }
+
+    @staticmethod
+    def check_if_data_expired(date):
+        delta = dateutil.parser.isoparse(date) - dateutil.parser.isoparse(date)
+        if delta.seconds > 5:
+            raise HTTPException(
+                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                detail={
+                    "message": "Server stores irrelevant data",
+                }
+            )

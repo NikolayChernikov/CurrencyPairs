@@ -34,18 +34,18 @@ class ProcessorService:
         try:
             logger.info("Run infinity loop")
             while True:
-                exchaner = self.exchanges_selector()
+                exchaner = 'coingecko'
                 with self.db_postgres.session() as session:
                     if exchaner == 'coingecko':
                         pairs = self.coingecko.get_currency_by_pair(self.coingecko_pairs)
                         for token in pairs.keys():
                             for currency in pairs[token].keys():
                                 value = pairs[token][currency]
+                                to_insert = self.make_msg(token, currency, value, exchaner)
+                                self.currency_pairs_repository.insert_or_update(session, **to_insert)
+                                session.commit()
                     elif exchaner == 'binance':
                         ...
-                    to_insert = self.make_msg(token, currency, value, exchaner)
-                    self.currency_pairs_repository.create_or_update(session, **to_insert)
-                    session.commit()
                     time.sleep(5)
 
         except Exception as exc:

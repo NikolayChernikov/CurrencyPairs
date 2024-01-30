@@ -20,7 +20,6 @@ services:
       - /bin/sh
       - -c
       - |
-        poetry run alembic revision --autogenerate -m "init"
         poetry run alembic upgrade head
         currency-pairs-worker
 
@@ -36,7 +35,7 @@ services:
     working_dir: /app
     restart: always
     ports:
-      - "8002:8000"
+      - "9000:8000"
     depends_on:
       - "currency-pairs-app"
     command:

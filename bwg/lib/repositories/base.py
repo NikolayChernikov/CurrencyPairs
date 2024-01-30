@@ -21,7 +21,7 @@ class BaseRepository:
 
     Model: ClassVar[Type["DeclarativeMeta"]]
 
-    def create_or_update(self, session: orm.Session, **kwargs: Any) -> "DeclarativeMeta":
+    def insert_or_update(self, session: orm.Session, **kwargs: Any) -> "DeclarativeMeta":
         cancelled_label_object = session.query(self.Model).filter_by(**kwargs).with_for_update().one_or_none()
         if cancelled_label_object is None:
             cancelled_label_object = self.Model(**kwargs)
