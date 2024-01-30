@@ -12,6 +12,7 @@ from bwg.currency_pairs.services.coingecko import CoinGeckoService
 from bwg.lib.env_config import get_config_path, maybe_load_env
 from bwg.lib.postgres.containers import PostgresContainer
 from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
+from bwg.currency_pairs.services.binance_service import BinanceService
 
 __all__ = ("create_container",)
 
@@ -33,6 +34,10 @@ class Container(containers.DeclarativeContainer):
         CoinGeckoService,
     )
 
+    binance:  providers.Singleton[BinanceService] = providers.Singleton(
+        BinanceService,
+    )
+
     currency_pairs_repository: providers.Singleton[CurrencyPairsRepository] = providers.Singleton(
         CurrencyPairsRepository,
     )
@@ -45,6 +50,7 @@ class Container(containers.DeclarativeContainer):
         db_postgres=postgres_package.db,
         coingecko=coingecko,
         currency_pairs_repository=currency_pairs_repository,
+        binance=binance,
     )
 
 

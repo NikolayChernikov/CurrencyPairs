@@ -1,5 +1,6 @@
 """CoinGecko client module."""
 import logging
+import time
 from binance.client import Client
 from typing import Dict
 
@@ -13,9 +14,25 @@ class BinanceService:
 
     def __init__(self) -> None:
         self.client = Client()
+        self.compendium = {
+            'USDT': 'USD',
+            'RUB': 'RUB'
+        }
 
-    def get_currency_by_pair(self) -> Dict:
-        tickers = self.client.get_symbol_ticker()
+    def get_currency_by_pair(self, pairs:  Dict) -> Dict:
+        res = {}
+        for token in pairs.keys():
+            token_buffer = {}
+            for currency in pairs[token]:
+                symbol = token+currency
+                tickers = self.client.get_symbol_ticker(symbol=symbol)
+                if token not in token_buffer.keys():
+                    token_buffer[str(token)] = {self.compendium[currency]: tickers['price']}
+                else:
+                    token_buffer[str(token)].update({self.compendium[currency]: tickers['price']})
+                res.update(token_buffer)
+            time.sleep(0.2)
+        return res
 
     def ping(self):
         try:

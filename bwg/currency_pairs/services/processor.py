@@ -20,42 +20,49 @@ class ProcessorService:
     db_postgres: "PostgresDatabase"
     currency_pairs_repository: "CurrencyPairsRepository"
 
-    bitcoin_pairs = {
-        'BTC': ['RUB', 'USDT'],
-        'ETH': ['RUB', 'USDT'],
-    }
+    def __init__(self):
+        self.binance_pairs = {
+            'BTC': ['RUB', 'USDT'],
+            'ETH': ['RUB', 'USDT'],
+        }
 
-    coingecko_pairs = {
-        'BITCOIN': ['RUB', 'USD'],
-        'ETHEREUM': ['RUB', 'USD'],
-    }
+        self.coingecko_pairs = {
+            'BITCOIN': ['RUB', 'USD'],
+            'ETHEREUM': ['RUB', 'USD'],
+        }
+
+        self.default_exchanger = 'binance'
 
     def run_infinity_loop(self):
         try:
             logger.info("Run infinity loop")
+            exchaner = self.default_exchanger
             while True:
-                exchaner = 'coingecko'
+                pairs = None
                 with self.db_postgres.session() as session:
                     if exchaner == 'coingecko':
                         pairs = self.coingecko.get_currency_by_pair(self.coingecko_pairs)
-                        for token in pairs.keys():
-                            for currency in pairs[token].keys():
-                                value = pairs[token][currency]
-                                to_insert = self.make_msg(token, currency, value, exchaner)
-                                self.currency_pairs_repository.insert_or_update(session, **to_insert)
-                                session.commit()
                     elif exchaner == 'binance':
-                        ...
-                    time.sleep(5)
+                        pairs = self.binance.get_currency_by_pair(self.binance_pairs)
+                    if not pairs:
+                        self.exchanges_selector()
+                    for token in pairs.keys():
+                        for currency in pairs[token].keys():
+                            value = pairs[token][currency]
+                            to_insert = self.make_msg(token, currency, value, exchaner)
+                            self.currency_pairs_repository.insert_or_update(session, **to_insert)
+                            session.commit()
+                            logger.info(to_insert)
+                time.sleep(2)
 
         except Exception as exc:
             logger.exception(f"Failed with {exc=}.")
 
     def exchanges_selector(self) -> Optional[str]:
         while True:
-            if self.coingecko.ping():
+            if not self.coingecko.ping():
                 return 'coingecko'
-            elif self.binance.ping():
+            elif not self.binance.ping():
                 return 'binance'
             else:
                 logger.error("Could not connect to exchanges")
