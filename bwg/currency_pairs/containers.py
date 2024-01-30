@@ -7,12 +7,12 @@ import logging
 
 from dependency_injector import containers, providers
 
-from bwg.currency_pairs.services.processor import ProcessorService
+from bwg.currency_pairs.services.binance_service import BinanceService
 from bwg.currency_pairs.services.coingecko import CoinGeckoService
+from bwg.currency_pairs.services.processor import ProcessorService
 from bwg.lib.env_config import get_config_path, maybe_load_env
 from bwg.lib.postgres.containers import PostgresContainer
 from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
-from bwg.currency_pairs.services.binance_service import BinanceService
 
 __all__ = ("create_container",)
 

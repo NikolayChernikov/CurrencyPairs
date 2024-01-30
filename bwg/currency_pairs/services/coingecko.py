@@ -1,8 +1,9 @@
 """CoinGecko client module."""
 import logging
 import time
+from typing import Dict, Optional
+
 from pycoingecko import CoinGeckoAPI
-from typing import Dict
 
 __all__ = ("CoinGeckoService",)
 
@@ -15,7 +16,7 @@ class CoinGeckoService:
     def __init__(self) -> None:
         self.client = CoinGeckoAPI()
 
-    def get_currency_by_pair(self, pairs: Dict) -> Dict:
+    def get_currency_by_pair(self, pairs: Dict) -> dict:
         res = {}
         for token in pairs.keys():
             pair = self.client.get_price(ids=token, vs_currencies=pairs[token])
@@ -23,6 +24,7 @@ class CoinGeckoService:
             res.update(pair)
         return res
 
-    def ping(self):
+    def ping(self) -> Optional[bool]:
         if self.client.ping():
             return True
+        return False

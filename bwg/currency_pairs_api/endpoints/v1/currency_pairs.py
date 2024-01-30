@@ -1,10 +1,10 @@
 """ Test endpoint module. """
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
+from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 from bwg.currency_pairs_api.services.currency_pairs import CurrencyPairsService
-from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 currency_pairs_router = APIRouter()
 
@@ -19,7 +19,7 @@ async def get_currency_pairs(
         token: str,
         currency: str,
         currency_pairs: CurrencyPairsService = Depends(Provide["currency_pairs"])  # noqa
-):
+) -> Response:
     res = currency_pairs.execute(token, currency)
 
     if not res:

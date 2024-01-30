@@ -1,5 +1,5 @@
 """EntityTableType module."""
-from sqlalchemy import Column, DateTime, String, Float
+from sqlalchemy import Column, DateTime, Float, String
 
 from bwg.lib.models.base import Base
 

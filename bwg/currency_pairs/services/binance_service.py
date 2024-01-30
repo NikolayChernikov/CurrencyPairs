@@ -1,8 +1,11 @@
 """CoinGecko client module."""
+# pylint: disable=consider-iterating-dictionary
+# pylint: disable=broad-exception-caught
 import logging
 import time
-from binance.client import Client
 from typing import Dict
+
+from binance.client import Client
 
 __all__ = ("BinanceService",)
 
@@ -19,10 +22,10 @@ class BinanceService:
             'RUB': 'RUB'
         }
 
-    def get_currency_by_pair(self, pairs:  Dict) -> Dict:
+    def get_currency_by_pair(self, pairs:  Dict) -> dict:
         res = {}
         for token in pairs.keys():
-            token_buffer = {}
+            token_buffer = {}  # type: ignore[var-annotated]
             for currency in pairs[token]:
                 symbol = token+currency
                 tickers = self.client.get_symbol_ticker(symbol=symbol)
@@ -34,10 +37,9 @@ class BinanceService:
             time.sleep(0.2)
         return res
 
-    def ping(self):
+    def ping(self) -> bool:
         try:
             self.client.ping()
         except Exception:
             return False
-        else:
-            return True
+        return True

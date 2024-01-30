@@ -10,8 +10,8 @@ from dependency_injector import containers, providers
 from bwg.currency_pairs_api.services.currency_pairs import CurrencyPairsService
 from bwg.currency_pairs_api.services.reverse_url import ReverseUrlService
 from bwg.lib.env_config import get_config_path, maybe_load_env
-from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
 from bwg.lib.postgres.containers import PostgresContainer
+from bwg.lib.repositories.currency_pairs import CurrencyPairsRepository
 
 __all__ = ("create_container",)
 

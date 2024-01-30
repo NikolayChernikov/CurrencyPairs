@@ -1,6 +1,6 @@
 """Base Repository for the Spanner Models."""
 import logging
-from typing import TYPE_CHECKING, Any, ClassVar, Type, Optional
+from typing import TYPE_CHECKING, Any, ClassVar, Optional, Type
 
 from sqlalchemy import orm
 from sqlalchemy.inspection import inspect
